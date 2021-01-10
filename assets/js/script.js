@@ -45,50 +45,6 @@ var saveTasks = function() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 };
 
-$(".list-group").on("click", "p", function(){
-  var text = $(this)
-  .text()
-  .trim();
-  console.log(text);
-
-  var textInput = $("<textarea>")
-  .addClass("form-control")
-  .val(text);
-$(this).replaceWith(textInput);
-textInput.trigger("focus");
-});
-
-$(".list-group").on("blur", "textarea", function(){
-  //get the textareas current value
-  var text = $(this)
-  .val()
-  .trim();
-//get the parent ul's id attribute
-var status = $(this)
-  .closest(".list-group")
-  .attr("id")
-  .replace("list-", "");
-//get the tasks positiohn in the list of other li elements
-var index = $(this)
-.closest(".list-group-item")
-.index();
-
-//recreat p element
-var taskP = $("<p>")
-.addClass("m-1")
-.text(text);
-
-//replace textarea with p element
-$(this).replaceWith(taskP);
-
-tasks[status][index].text;
-saveTasks();
-
-});
-
-
-
-
 
 // modal was triggered
 $("#task-form-modal").on("show.bs.modal", function() {
@@ -119,10 +75,57 @@ $("#task-form-modal .btn-primary").click(function() {
       text: taskText,
       date: taskDate
     });
-
+  
     saveTasks();
-  }
+  } 
 });
+//task text was clicked
+
+$(".list-group").on("click", "p", function(){
+  var text = $(this)
+  .text()
+  .trim();
+  
+
+  var textInput = $("<textarea>")
+  .addClass("form-control")
+  .val(text);
+$(this).replaceWith(textInput);
+
+textInput.trigger("focus");
+});
+//editable field was un-focused
+$(".list-group").on("blur", "textarea", function(){
+  //get the textareas current value
+  var text = $(this)
+  .val()
+  //.trim();
+//get the parent ul's id attribute
+var status = $(this)
+  .closest(".list-group")
+  .attr("id")
+  .replace("list-", "");
+//get the tasks positiohn in the list of other li elements
+var index = $(this)
+.closest(".list-group-item")
+.index();
+
+// update task in array and re-save to localstorage
+tasks[status][index].text = text;
+saveTasks();
+
+
+//recreat p element
+var taskP = $("<p>")
+.addClass("m-1")
+.text(text);
+
+//replace textarea with p element
+$(this).replaceWith(taskP);
+
+});
+
+
 //due date was clicked
 $(".list-group").on("click", "span", function(){
   //get current text
@@ -152,7 +155,7 @@ $(".list-group").on("blur", "input[type='text']", function(){
   var status = $(this)
   .closest(".list-group")
   .attr("id")
-  .replace("list-", " ");
+  .replace("list-", "");
 
   //get the tasks position in hw list of other li elem
   var index = $(this)
@@ -171,9 +174,6 @@ $(".list-group").on("blur", "input[type='text']", function(){
   //replace input with span element
   $(this).replaceWith(taskSpan);
 });
-
-
-
 // remove all tasks
 $("#remove-tasks").on("click", function() {
   for (var key in tasks) {
@@ -181,9 +181,9 @@ $("#remove-tasks").on("click", function() {
     $("#list-" + key).empty();
   }
   saveTasks();
+  
 });
 
 // load tasks for the first time
 loadTasks();
-
 
