@@ -44,6 +44,6 @@
   background-size: 1px 100px;
   background-position: 0 -10px;
 }
-:hover {
+.btn-save:hover, .btn-add:hover, .btn-close:hover, .btn-delete:hover {
   background-position: 1px -50px;
 }
