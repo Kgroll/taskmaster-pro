@@ -8,23 +8,26 @@ $(".card .list-group").sortable({
   scroll: false,
   tolerance: "pointer",
   helper: "clone",
-  activate: function(event) {
+  activate: function(event) {    
     $(this).addClass("dropover");
-    $(".bottom-trash").addClass("bottom-trash-drag")
-
+    $(".bottom-trash").addClass("bottom-trash-drag");
+    console.log("activate", this);
   },
   deactivate: function(event, ui) {
     $(this).removeClass("dropover");
-    $(".bottom-trash").removeClass("bottom-trash-drag")
+    $(".bottom-trash").removeClass("bottom-trash-drag");
+    console.log("deactivate", this);
   },
   over: function(event) {
     $(event.target).addClass("dropover-active");
+    console.log("over", event.target);
   },
   out: function(event) {  
     $(event.target).removeClass("dropover-active");
+    console.log("out", event.target);
   },
   update: function(event) {
-
+    console.log("update", this);
     //array to store the task data i
   var tempArr = [];
 
@@ -291,10 +294,10 @@ $("#trash").droppable ({
     
   },
   over: function(event, ui) {
-    $(".bottom-trash").addClass("bottom-trash-active")
+    $(".bottom-trash").addClass("bottom-trash-active");
   },
   out: function(event, ui) {
-   $(".bottom-trash").removeClass("bottom-trash-active")
+   $(".bottom-trash").removeClass("bottom-trash-active");
   }
 });
 setInterval(function() {
